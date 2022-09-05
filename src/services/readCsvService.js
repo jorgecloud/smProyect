@@ -5,41 +5,51 @@ const { createSms } = require("./sms.send");
 const { resolve } = require("path");
 const { type } = require("os");
 const { send } = require("process");
+const e = require("express");
 
-let arch = "../../assets/csv/conta.csv";
-let arcI = path.join(__dirname, arch);
+let arch = "../assets/csv/";
 let dataArray;
 let sendMessages = 0
 let sendFail =[]
 indexSend = []
 
 let uploadCsv = (file)=>{
+  
+  let name = file.name
+  let arcI = path.join(__dirname, `${arch}${name}`)
   return new Promise((resolve, reject)=>{
 
    file.mv(arcI, (err)=>{
       if(err){
-        reject(err)
-        console.log(err)
+        console.log("err",err)
+        return  reject(err)
       }
       resolve(arcI)
-      console.log("todo bien", arcI)
+      console.log("file", arcI)
     })
-    
   })
-
-
 }
 
 
-let readFile = () => {
+let readFile = (arcI) => {
   return new Promise((resolve, reject) => {
+
     fs.readFile(arcI, "utf8", function (err, data) {
       if (err) {
-        console.log(err);
-        reject(err);
+        console.log("err",err);
+      return  reject(err);
       }
       dataArray = dataCaracter(data);
-      console.log(dataArray)
+      console.log("dataArray",dataArray)
+     let eleme = dataArray.find(Element => Element === 'Name,Phone 1  Value',)
+     
+     if(eleme == null || eleme == undefined || eleme == ""){
+      fs.unlinkSync(arcI)
+
+      console.log("element no found",eleme)
+     return reject(eleme)
+     }
+     console.log("eleme",eleme)
 
       dataArray.map((index, position) => {
         let name = nameFormat(index);
@@ -49,13 +59,14 @@ let readFile = () => {
         if(number == false || name == false){
          console.log("datos invalidos",index, position)
          sendFail.push(index)
-
+        
         }else{
-        // createSms(name, number).then(sendMessages = sendMessages + 1)
+         createSms(name, number).then(sendMessages = sendMessages + 1).catch(sendFail.push(index))
          indexSend.push(`${name}:${number}`)
         }
         if (position === dataArray.length - 1) {
           resolve({"send messages total":sendMessages, "sen messages":indexSend, "sendFail":sendFail});
+          fs.unlinkSync(arcI)
           sendMessages = 0
           indexSend=[]
           sendFail =[]

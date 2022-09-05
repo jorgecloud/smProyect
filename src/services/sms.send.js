@@ -8,27 +8,22 @@ const client = require("twilio")(accountSid, authToken);
 
  
 // create sms 
-let createSms =  (name, number) => {
-  return new Promise((resolve, reject)=>{
-    let textSm = model.reviewNew(name)
-  resolve(client.messages
-    .create({
-      body: textSm,
-      from: fromNumber,
-      to: number,
-    }))
 
-  })
+let createSms =  (name, number) => {
+  return new Promise(()=>{
     let textSm = model.reviewNew(name)
     client.messages
-      .create({
-        body: textSm,
-        from: fromNumber,
-        to: number,
-      })
-      .catch(error => {throw error} );
-};
+     .create({
+       body: textSm,
+       from: fromNumber,
+       to: number,
+     }).catch(err => console.log("twlio",err))
+  })
+} 
+
+
 
 module.exports = {
     createSms
+
 }

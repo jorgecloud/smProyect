@@ -17,13 +17,38 @@ let createSms =  (name, number) => {
        body: textSm,
        from: fromNumber,
        to: number,
-     }).catch(err => console.log("twlio",err))
+     }).catch(err =>{console.log("twlio", err);  return false})
+     
   })
 } 
 
 
+let numberArray = (body)=>{
+  let numbers = body.to;
+  numbers.forEach((element) => {
+    let textSm = model.sendM(body)
+    client.messages
+      .create({
+        body: textSm,
+        from: fromNumber,
+        // mediaUrl: ['http://mariamila.com/images/nuevas/logo-web.png'],
+        to: element,
+      })
+      .then((mesas) => {
+       console.log(mesas)
+        let dato = JSON.stringify(mesas)
+       // dbMongo.insertData(dato);
+        return
+      })
+      .catch(err => { console.log(err) });
+  })
+
+};
+
+
+
 
 module.exports = {
-    createSms
-
+    createSms,
+    numberArray
 }

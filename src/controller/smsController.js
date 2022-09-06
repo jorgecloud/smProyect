@@ -1,4 +1,4 @@
-//require("../config");
+let sendSms = require("../services/smsService")
 
 const { json } = require("express");
 const dbMongo = require("./db");
@@ -9,12 +9,20 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const fromNumber = process.env.TWILIO_NUMBER_FROM;
 const client = require("twilio")(accountSid, authToken);
 
- 
+
 // create sms 
 let createSms = (req, res) => {
   let body = req.body;
-  let numbers = body.to;
-  numbers.forEach((element) => {
+  if(typeof(body) != "object"){
+  return  res.json({err:"datos no validos verifique formato json"})
+  }
+ 
+
+  sendSms.sendSms(body).then(dato => res.json({"send message":dato})).catch(dato =>res.json({"dato":dato}))
+ 
+  
+
+/*   numbers.forEach((element) => {
     let textSm = model.sendM(body)
     client.messages
       .create({
@@ -30,7 +38,7 @@ let createSms = (req, res) => {
         return
       })
       .catch(err => { res.json({ error: err }) });
-  });
+  }); */
 };
 
 
@@ -57,9 +65,9 @@ let createReview = (req, res) => {
   });
 };
 
-let sendMail = async (mail, data)=>{
-let sm = await createSms()
-console.log(sm)
+let sendMail = async (mail, data) => {
+  let sm = await createSms()
+  console.log(sm)
 }
 
 module.exports = {

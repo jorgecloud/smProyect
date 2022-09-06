@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const createSms = require("../../controller/sms.controller");
+const createSms = require("../../controller/smsController");
 const readcsv = require('../../controller/readCsvController')
 
 

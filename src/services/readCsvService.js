@@ -5,7 +5,7 @@ const { createSms } = require("./sms.send");
 const { resolve } = require("path");
 const { type } = require("os");
 const { send } = require("process");
-const e = require("express");
+
 
 let arch = "../assets/csv/";
 let dataArray;

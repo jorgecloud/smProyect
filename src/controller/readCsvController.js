@@ -15,10 +15,6 @@ let fileCsv = (req, res) => {
     readFile.readFile(dato).then(dato=>res.json({"response":dato, status:200})).catch(error => res.json({ status:500, "message":"file no found", error}))})
     .catch(err => res.json({status:404,error:err, message:"no se pudo mover al servidor consulte el administrador"}))
 
-//dato=>{ res.json(dato), console.log("dato",dato)}
-   //res.json({archivo})
-
-  //readFile.readFile().then(dato=>res.json({"response":dato, status:200})).catch(error => res.json({error}))
 }
 
 module.exports = {

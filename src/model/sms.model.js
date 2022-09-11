@@ -1,6 +1,10 @@
 
 let sendM = (body)=>{
-return `Holaaaa ${body.name } recuerda que tienes cita con Mila Global Solution INC ${body.day} ${body.hours} Tel:(239)529-5262 Ubicacion:\nbit.ly/3dQShnH`
+return `Hola ${body.name } recuerda que tienes cita con Mila Global Solution INC ${body.day} ${body.hours} Tel:(239)529-5262 Ubicacion:\nbit.ly/3dQShnH`
+}
+
+let sendMessagesIn = (body)=>{
+    return `Hi ${body.name}, you have an appointment at Mila Global Solutions INC on ${body.day} ${body.date} at ${body.hours}. Location 2661 Airport RD Suite B-105 Naples FL 34112`
 }
 
 /* let sendM = (body)=>{
@@ -20,5 +24,6 @@ let reviewNew = (name)=>{
 module.exports = {
     sendM,
     reviewClient,
-    reviewNew
+    reviewNew,
+    sendMessagesIn
 }

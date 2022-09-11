@@ -13,6 +13,7 @@ let sendSms = (body) => {
       let name = body.name;
       let day = body.day;
       let hours = body.hours;
+      let textSm
 
       console.log("body.to", body.to)
       if (numbers === undefined || numbers === "" || numbers === null || numbers.length === 0) {
@@ -30,9 +31,17 @@ let sendSms = (body) => {
       if (hours === undefined || hours === "" || hours === null || hours.length === 0) {
          return reject("error en los datos hours")
       }
+      if(body.type === "spanish"){
+         console.log("espanol")
+         textSm = model.sendM(body)
+      }else{
+         textSm = model.sendMessagesIn(body)
+         console.log("ingles")
+
+      }
 
       numbers.forEach((element) => {
-         let textSm = model.sendM(body)
+   
          client.messages.create({
                body: textSm,
                from: fromNumber,

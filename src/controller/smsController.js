@@ -1,7 +1,7 @@
 let sendSms = require("../services/smsService");
 
 const { json } = require("express");
-const dbMongo = require("../data/db");
+const dbMongo = require("../db/db");
 const model = require("../model/sms.model");
 // twilio account
 const accountSid = process.env.TWILIO_ACCOUNT_SID;

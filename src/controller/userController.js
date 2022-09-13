@@ -1,4 +1,4 @@
-const crearUserService = require('../services/userService')
+const users = require('../services/userService')
 const bcrypt = require('bcrypt');
 
 
@@ -14,7 +14,7 @@ let crearUser = async(req, res)=>{
     }
     console.log("el usuario es ",user)
 
-  let userId = await crearUserService.crearUserService(user)
+  let userId = await users.crearUserService(user)
   console.log("respuesta",userId)
   
   if(userId.error){
@@ -27,6 +27,13 @@ let crearUser = async(req, res)=>{
  
 }
 
+let login =async(req, res)=>{
+  let user = req.body 
+  let userExist = await  users.findUser(user)
+  res.json({userExist})
+}
+
 module.exports = {
-    crearUser
+    crearUser,
+    login
 }

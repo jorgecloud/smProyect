@@ -15,12 +15,11 @@ const collectionSm = confi.confiBd.collectionSm;
 const client = new MongoClient(uri);
 
 async function insertData(data) {
-  
   try {
     // mongo connect
     await client.connect();
     console.log("Connected correctly to server");
-    // Use db name 
+    // Use db name
     const db = client.db(dbName);
     // Use the collection name  "Sm"
     const col = db.collection(collectionSm);
@@ -28,8 +27,7 @@ async function insertData(data) {
     let dato = JSON.parse(data);
     // Insert a single document, wait for promise so we can read it back
     const p = await col.insertOne(dato);
-    console.log("doc", p.insertedId)
-
+    console.log("doc", p.insertedId);
   } catch (err) {
     console.log(err.stack);
   } finally {
@@ -37,35 +35,48 @@ async function insertData(data) {
   }
 }
 
-
 async function inserUser(user) {
-  
   try {
     // mongo connect
     await client.connect();
     console.log("Connected correctly to server");
-    // Use db name 
+    // Use db name
     const db = client.db(dbName);
     // Use the collection name  "Sm"
     const col = db.collection("user");
-    // Construct a document
-    //let dato = JSON.parse(data);
     // Insert a single document, wait for promise so we can read it back
-    const p = await col.insertOne(userdata);
-    console.log("doc", p.insertedId)
-    return p
-
+    const p = await col.insertOne(user);
+    console.log("doc", p.insertedId);
+    return p;
   } catch (err) {
     console.log(err);
-    return err
+    return err;
   } finally {
     await client.close();
   }
 }
 
 
+async function userFind(user){
+  try{await client.connect();
+    console.log("Connected correctly to server");
+    // Use db name
+    const db = client.db(dbName);
+    // Use the collection name  "Sm"
+    const col  = await db.collection("user").findOne({"usuario":user.usuario});
+    // Insert a single document, wait for promise so we can read it back
+   // const p = await col.find()
+    return col
+
+  }catch{(error)=>{
+    console.log(error)
+    return error
+  }}
+  
+} 
 
 module.exports = {
   insertData,
-  inserUser
+  inserUser,
+  userFind
 };

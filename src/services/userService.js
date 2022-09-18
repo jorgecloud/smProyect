@@ -1,5 +1,6 @@
 const dbMongo = require("../db/db");
 const bcrypt = require('bcrypt');
+const tken = require("jsonwebtoken")
 
 let crearUserService = async (user) => {
   let userCreate = await dbMongo.inserUser(user);
@@ -22,7 +23,9 @@ let findUser = async (user) => {
     return {status:400, mensaje:"el password es incorrecto"}
 }else{
 
-    return userFind;
+  let token = tken.sign({userFind}, process.env.SECRE, {expiresIn: process.env.CADUCIDAD})
+
+    return {user:userFind.usuario, token: token};
   }
 };
 

@@ -8,11 +8,11 @@ const {validarToken} = require('../../middlewares/autenticationToke')
 
 router.post("/sendsms",validarToken, createSms.createSms);
 
-router.post("/creareview", createSms.createReview);
+router.post("/creareview", validarToken, createSms.createReview);
 
-router.post("/readcsv", readcsv.fileCsv)
+router.post("/readcsv", validarToken, readcsv.fileCsv)
 
-router.post("/crearuser", user.crearUser)
+router.post("/crearuser", validarToken, user.crearUser)
 
 router.post("/login", user.login)
 

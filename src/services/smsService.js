@@ -12,10 +12,11 @@ let sendSms = (body) => {
       let numbers = body.to;
       let name = body.name;
       let day = body.day;
+      let date = body.date;
       let hours = body.hours;
       let textSm
+      console.log(new Date(date))
 
-      console.log("body.to", body.to)
       if (numbers === undefined || numbers === "" || numbers === null || numbers.length === 0) {
          return reject("error en los datos to")
       }

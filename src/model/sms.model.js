@@ -7,6 +7,10 @@ let sendMessagesIn = (body)=>{
     return `Hi ${body.name}, you have an appointment at Mila Global Solutions INC on ${body.day} ${body.date} at ${body.hours}. Location 2661 Airport RD Suite B-105 Naples FL 34112`
 }
 
+let responceSm = ()=>{
+    return `Este e el servicio de notificacion de Mila Global Solutions INC, ti tiene alguna duda o sugerencia por favor comuniquese con (239)529-5262 Gracias`
+}
+
 /* let sendM = (body)=>{
     return `Hola ${body.name} estamos en espera de tu llamada para resolver unas preguntas sobre tu carta de referencia por favor llamanos (239)529-5262, Mila Global Solutions INC`
     }  */
@@ -25,5 +29,6 @@ module.exports = {
     sendM,
     reviewClient,
     reviewNew,
-    sendMessagesIn
+    sendMessagesIn,
+    responceSm
 }

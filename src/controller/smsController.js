@@ -49,8 +49,9 @@ let createReview = (req, res) => {
 };
 
 let responce = (req, res)=>{
+  let messag = model.responceSm()
   const twiml = new MessagingResponse();
-  twiml.message('The Robots are coming! Head for the hills!');
+  twiml.message(messag);
   res.writeHead(200,{'Content-Type':'text/xml'})
   res.end(twiml.toString())
  /*  res.type('text/xml').send(twiml.toString());

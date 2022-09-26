@@ -3,6 +3,8 @@ const fromNumber = process.env.TWILIO_NUMBER_FROM;
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
+
 const model = require("../model/sms.model")
 
 
@@ -54,6 +56,14 @@ let sendSms = (body) => {
             })
       })
    })
+}
+
+let responce =()=>{
+   const twiml = new MessagingResponse();
+   twiml.message('The Robots are coming! Head for the hills!');
+
+   res.type('text/xml').send(twiml.toString());
+
 }
 
 

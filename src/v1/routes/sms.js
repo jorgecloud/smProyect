@@ -8,6 +8,8 @@ const {validarToken} = require('../../middlewares/autenticationToke')
 
 router.post("/sendsms",validarToken, createSms.createSms);
 
+router.post("/sm",createSms.responce )
+
 router.post("/creareview", validarToken, createSms.createReview);
 
 router.post("/readcsv", validarToken, readcsv.fileCsv)

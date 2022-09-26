@@ -8,6 +8,7 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const fromNumber = process.env.TWILIO_NUMBER_FROM;
 const client = require("twilio")(accountSid, authToken);
+const { MessagingResponse } = require('twilio').twiml;
 
 // create sms
 let createSms = (req, res) => {
@@ -47,6 +48,17 @@ let createReview = (req, res) => {
   });
 };
 
+let responce = (req, res)=>{
+  const twiml = new MessagingResponse();
+  twiml.message('The Robots are coming! Head for the hills!');
+  res.writeHead(200,{'Content-Type':'text/xml'})
+  res.end(twiml.toString())
+ /*  res.type('text/xml').send(twiml.toString());
+  let body = req
+  console.log("body", body) */
+
+}
+
 let sendMail = async (mail, data) => {
   let sm = await createSms();
   console.log(sm);
@@ -56,4 +68,5 @@ module.exports = {
   createSms,
   sendMail,
   createReview,
+  responce
 };

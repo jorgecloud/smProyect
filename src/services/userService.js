@@ -14,9 +14,8 @@ let crearUserService = async (user) => {
 };
 
 let findUser = async (user) => {
-  console.log("user",user)
   let userFind = await dbMongo.userFind(user);
-  console.log("user", userFind);
+  console.log("user", userFind.usuario);
   if (userFind === null || userFind === undefined) {
     return `no se encontro usuario ${user.usuario}`;
   } else if (!bcrypt.compareSync(user.password, userFind.password)){

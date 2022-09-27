@@ -8,7 +8,7 @@ let sendMessagesIn = (body)=>{
 }
 
 let responceSm = ()=>{
-    return `Este e el servicio de notificacion de Mila Global Solutions INC, ti tiene alguna duda o sugerencia por favor comuniquese con (239)529-5262 Gracias`
+    return `Este e el servicio de notificacion de Mila Global Solutions INC, si tiene alguna duda o sugerencia por favor comuniquese con (239)529-5262 Gracias`
 }
 
 /* let sendM = (body)=>{

@@ -10,7 +10,7 @@ const client = require("twilio")(accountSid, authToken);
 
 let createSms = (name, number) => {
   return new Promise(() => {
-    let textSm = model.reviewNew(name);
+    let textSm = model.loteriVisas();
     client.messages
       .create({
         body: textSm,

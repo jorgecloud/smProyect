@@ -23,6 +23,11 @@ let createSms = (req, res) => {
     .catch((dato) => res.json({ dato: dato }));
 };
 
+let smsFree = (req, res)=>{
+  let message = req.body.messagefree
+
+}
+
 // create review
 let createReview = (req, res) => {
   let body = req.body;
@@ -67,6 +72,7 @@ let sendMail = async (mail, data) => {
 
 module.exports = {
   createSms,
+  smsFree,
   sendMail,
   createReview,
   responce

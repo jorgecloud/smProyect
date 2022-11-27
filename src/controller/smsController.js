@@ -19,8 +19,8 @@ let createSms = (req, res) => {
 
   sendSms
     .sendSms(body)
-    .then((dato) => res.json({ "send message": dato }))
-    .catch((dato) => res.json({ dato: dato }));
+    .then((data) => res.json({  data }))
+    .catch((data) => res.json({ data }));
 };
 
 let smsFree = (req, res)=>{

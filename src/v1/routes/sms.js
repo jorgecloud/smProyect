@@ -22,7 +22,7 @@ router.post("/login", user.login)
 
 
 router.get("/", (req, res) => {
-    res.send("Get all workouts");
+    res.json({"Get":"Get all workouts"});
   });
 
 module.exports = router;

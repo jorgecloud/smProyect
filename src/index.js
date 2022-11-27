@@ -18,12 +18,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //application/json
 app.use(bodyParser.json());
 
+// cors
+app.use(cors(corsOptions));
+
 //routes
 app.use("/api/v1", v1router);
 
-
-// cors
-app.use(cors(corsOptions));
 
 
 // server up

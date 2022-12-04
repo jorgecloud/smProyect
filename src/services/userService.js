@@ -13,11 +13,13 @@ let crearUserService = async (user) => {
   }
 };
 
+//find user db
 let findUser = async (user) => {
   let userFind = await dbMongo.userFind(user);
-  console.log("user", userFind.usuario);
+  console.log("user", userFind);
   if (userFind === null || userFind === undefined) {
-    return `no se encontro usuario ${user.usuario}`;
+   return {status:400, mensaje:"Datos incorrectos, try again"}
+     
   } else if (!bcrypt.compareSync(user.password, userFind.password)){
     return {status:400, mensaje:"el password es incorrecto"}
 }else{

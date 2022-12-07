@@ -63,7 +63,7 @@ async function userFind(user){
     // Use db name
     const db = client.db(dbName);
     // Use the collection name  "Sm"
-    const col  = await db.collection("user").findOne({"usuario":user.usuario});
+    const col  = await db.collection("user").findOne({"email":user.email});
     // Insert a single document, wait for promise so we can read it back
    // const p = await col.find()
     return col

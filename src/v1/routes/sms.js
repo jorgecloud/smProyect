@@ -4,9 +4,9 @@ const createSms = require("../../controller/smsController");
 const readcsv = require('../../controller/readCsvController')
 const user = require ('../../controller/userController')
 const {validarToken} = require('../../middlewares/autenticationToke')
-const {validator} =require('../../middlewares/validator')
+const {validator, validatorAppoiments} =require('../../middlewares/validator')
 
-router.post("/sendsms",validarToken, createSms.createSms);
+router.post("/sendsms", validarToken, validatorAppoiments, createSms.createSms);
 
 router.post("/smsfree", validarToken, createSms.smsFree)
 

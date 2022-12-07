@@ -21,7 +21,7 @@ let findUser = async (user) => {
    return {status:400, mensaje:"Datos incorrectos, try again"}
      
   } else if (!bcrypt.compareSync(user.password, userFind.password)){
-    return {status:400, mensaje:"el password es incorrecto"}
+    return {status:400, mensaje:"el password es incorrecto try again"}
 }else{
 
   let token = tken.sign({userFind}, process.env.SECRE, {expiresIn: process.env.CADUCIDAD})

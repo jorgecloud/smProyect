@@ -41,6 +41,18 @@ let crearUser = async (req, res) => {
 
 let login = async (req, res) => {
   let user = req.body;
+  const errors = validationResult(req);
+
+   // if there is error then return Error
+   if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      errors: errors.array(),
+    });
+  }
+
+
+
   let userExist = await users.findUser(user);
   res.json({ userExist });
 };

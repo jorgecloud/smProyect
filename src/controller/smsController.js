@@ -1,32 +1,55 @@
-let sendSms = require("../services/smsService");
-
+const {sendSms} = require("../services/smsService");
 const { json } = require("express");
-const dbMongo = require("../db/db");
 const model = require("../model/sms.model");
+const { validationResult } = require("express-validator");
+const { dayForm } = require("../utils/date");
 // twilio account
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const fromNumber = process.env.TWILIO_NUMBER_FROM;
 const client = require("twilio")(accountSid, authToken);
-const { MessagingResponse } = require('twilio').twiml;
+const { MessagingResponse } = require("twilio").twiml;
 
 // create sms
-let createSms = (req, res) => {
+let createSms = async (req, res) => {
   let body = req.body;
+  let message;
+
+  const errors = validationResult(req);
+
+  // if there is error then return Error
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      errors: errors.array(),
+    });
+  }
+
   if (typeof body != "object") {
     return res.json({ err: "datos no validos verifique formato json" });
   }
 
-  sendSms
-    .sendSms(body)
-    .then((data) => res.json({  data }))
-    .catch((data) => res.json({ data }));
+  let fechaAppointment = await dayForm(body.day);
+
+  console.log("fecha Appointment", fechaAppointment);
+
+  if (body.type === "Es") {
+    console.log("espanol");
+    message = await model.sendMessagesEs(body, fechaAppointment);
+  } else {
+    message = await  model.sendMessagesIn(body);
+    console.log("In");
+  }
+
+    sendSms(body, message).then(data => res.json(data)).catch(err => res.json(err))
+    
+   // .then((data) => res.json({ data }))
+   // .catch((data) => res.json({ data }));
 };
 
-let smsFree = (req, res)=>{
-  let message = req.body.messagefree
-
-}
+let smsFree = (req, res) => {
+  let message = req.body.messagefree;
+};
 
 // create review
 let createReview = (req, res) => {
@@ -53,17 +76,16 @@ let createReview = (req, res) => {
   });
 };
 
-let responce = (req, res)=>{
-  let messag = model.responceSm()
+let responce = (req, res) => {
+  let messag = model.responceSm();
   const twiml = new MessagingResponse();
   twiml.message(messag);
-  res.writeHead(200,{'Content-Type':'text/xml'})
-  res.end(twiml.toString())
- /*  res.type('text/xml').send(twiml.toString());
+  res.writeHead(200, { "Content-Type": "text/xml" });
+  res.end(twiml.toString());
+  /*  res.type('text/xml').send(twiml.toString());
   let body = req
   console.log("body", body) */
-
-}
+};
 
 let sendMail = async (mail, data) => {
   let sm = await createSms();
@@ -75,5 +97,5 @@ module.exports = {
   smsFree,
   sendMail,
   createReview,
-  responce
+  responce,
 };

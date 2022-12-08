@@ -7,7 +7,6 @@ const fromNumber = process.env.TWILIO_NUMBER_FROM;
 const client = require("twilio")(accountSid, authToken);
 
 // create sms
-
 let createSms = (name, number) => {
   return new Promise(() => {
     let textSm = model.loteriVisas();

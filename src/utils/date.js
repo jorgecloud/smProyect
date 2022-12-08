@@ -16,6 +16,8 @@ let monthEs = [
   "Diciembre",
 ];
 
+let hourOffice = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6"];
+
 let dayForm = (date) => {
   console.log("dateAppoiments", date);
   let currenDateYear = dayjs().year();
@@ -36,6 +38,17 @@ let dayForm = (date) => {
   return dateAppoiments;
 };
 
+let hourForm = (hour) => {
+  let horaf = new Date("1970-01-01T" + hour + "Z").toLocaleTimeString("en-US", {
+    timeZone: "UTC",
+    hour12: true,
+    hour: "numeric",
+    minute: "numeric",
+  });
+  return horaf;
+};
+
 module.exports = {
   dayForm,
+  hourForm,
 };

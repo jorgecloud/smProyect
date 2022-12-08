@@ -10,7 +10,7 @@ router.post("/sendsms", validarToken, validatorAppoiments, createSms.createSms);
 
 router.post("/smsfree", validarToken, createSms.smsFree)
 
-router.post("/sm",createSms.responce )
+router.post("/sm",createSms.responce)
 
 router.post("/creareview", validarToken, createSms.createReview);
 

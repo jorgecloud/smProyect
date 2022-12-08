@@ -1,10 +1,10 @@
 
-let sendMessagesEs = (body, fechaAppointment)=>{
-return 'Hola'+' '+body.name+' '+'recuerda que tienes cita con Mila Global Solution INC'+' '+fechaAppointment+' '+body.hours+' '+'Tel:(239)529-5262 Ubicacion:bit.ly/3dQShnH'
+let sendMessagesEs = (body, fechaAppointment, hours)=>{
+return 'Hola'+' '+body.name+' '+'recuerda que tienes cita con Mila Global Solution INC'+' '+fechaAppointment+' '+hours+' '+'Tel:(239)529-5262 Ubicacion:bit.ly/3dQShnH'
 } 
 
-let sendMessagesIn = (body)=>{
-    return `Hi ${body.name}, you have an appointment at Mila Global Solutions INC on ${body.day} ${body.date} at ${body.hours}. Location 2661 Airport RD Suite B-105 Naples FL 34112`
+let sendMessagesIn = (body, hours)=>{
+    return `Hi ${body.name}, you have an appointment at Mila Global Solutions INC on ${body.day} at ${hours}. Location 2661 Airport RD Suite B-105 Naples FL 34112`
 }
 
 let responceSm = ()=>{

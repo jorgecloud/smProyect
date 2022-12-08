@@ -31,7 +31,7 @@ const validatorAppoiments =[
   .exists()
   .withMessage("Provide valid hours")
   .isString()
-  .withMessage("incorrect format"),
+  .matches(/^(20|21|22|23|[01]\d|\d)((:[0-5]\d){1,2})$/),
   
   body("to")
   .exists()

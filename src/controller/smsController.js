@@ -1,4 +1,4 @@
-const {sendSms, responceMessage} = require("../services/smsService");
+const { sendSms, responceMessage } = require("../services/smsService");
 const { json } = require("express");
 const model = require("../model/sms.model");
 const { validationResult } = require("express-validator");
@@ -8,7 +8,7 @@ const { dayForm, hourForm } = require("../utils/date");
 // create sms
 let createSms = async (req, res) => {
   let body = req.body;
-  console.log("hora inicial",body.hours)
+  console.log("hora inicial", body.hours);
   let message;
 
   const errors = validationResult(req);
@@ -21,26 +21,29 @@ let createSms = async (req, res) => {
     });
   }
 
-  if (typeof body != "object"){
-    return res.json({ err: "datos no validos verifique formato json" });
+  if (typeof body != "object") {
+    return res.status(400).json({success:false,
+       errors: "datos no validos verifique formato json" });
   }
 
   let fechaAppointment = await dayForm(body.day);
 
   console.log("fecha Appointment", fechaAppointment);
 
-  let hours = await hourForm(body.hours)
-  console.log("hora formateada", hours)
+  let hours = await hourForm(body.hours);
+  console.log("hora formateada", hours);
 
   if (body.type === "Es") {
     console.log("espanol");
     message = await model.sendMessagesEs(body, fechaAppointment, hours);
   } else {
-    message = await  model.sendMessagesIn(body, hours);
+    message = await model.sendMessagesIn(body, hours);
     console.log("In");
   }
 
-  sendSms(body, message).then(data => res.json(data)).catch(err => res.json(err))
+  sendSms(body, message)
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json({success:false,errors:err}));
 };
 
 let smsFree = (req, res) => {
@@ -74,18 +77,12 @@ let createReview = (req, res) => {
 
 let responce = async (req, res) => {
   let messag = await model.responceSm();
- let resp =await responceMessage(messag);
- console.log("resp",resp)
-  //const twiml = new MessagingResponse();
-  //twiml.message(messag);
+  let resp = await responceMessage(messag);
+  console.log("resp", resp);
+
   res.writeHead(200, { "Content-Type": "text/xml" });
   res.end(resp);
-  //let respu =twiml.toString()
- // res.end("respuesta");
-  // res.type('text/xml').send(twiml.toString());
-
 };
-
 
 let sendMail = async (mail, data) => {
   let sm = await createSms();

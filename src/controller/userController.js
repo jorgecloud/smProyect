@@ -51,10 +51,12 @@ let login = async (req, res) => {
     });
   }
 
-
-
   let userExist = await users.findUser(user);
-  res.json({ userExist });
+  console.log("userExist",userExist)
+  if(userExist.error){
+    return res.status(400).json({success:false, errors: userExist.error}) 
+  }
+  res.status(200).json({ success: true, accesToken:userExist.token, user:userExist.user });
 };
 
 module.exports = {

@@ -69,7 +69,7 @@ async function userFind(user){
     return col
 
   }catch{(error)=>{
-    console.log(error)
+    console.log("este es el error en db",error)
     return error
   }}
   

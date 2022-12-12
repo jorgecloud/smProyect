@@ -8,7 +8,7 @@ let sendMessagesIn = (body, hours)=>{
 }
 
 let responceSm = ()=>{
-    return `Este es el servicio de notificacion de Mila Global Solutions INC, si tiene alguna duda o sugerencia por favor comuniquese con (239)529-5262 Gracias`
+    return `Este es el servicio de notificacion de Mila Global Solutions INC, si tiene alguna duda o sugerencia por favor comuniquese al (239)529-5262 o visitanos en www.mariamila.com estamos ubicados 2661 Airport Rd S Suite B-105 B-106 Gracias`
 }
 
 /* let loteriVisas = ()=>{

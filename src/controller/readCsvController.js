@@ -3,6 +3,11 @@ const readFile = require('../services/readCsvService')
 
 let fileCsv = (req, res) => {
   let file = req.files.file
+  let imagenUrl = req.body.url
+  let mensaje = req.body.mensaje
+
+  console.log(imagenUrl)
+  
 
   if (file.mimetype != 'text/csv') {
     return res.json({ message: "file no fount, atach file .csv" })
@@ -12,7 +17,7 @@ let fileCsv = (req, res) => {
   }
 
   readFile.uploadCsv(file).then(dato =>{
-    readFile.readFile(dato).then(dato=>res.json({"response":dato, status:200})).catch(error => res.json({ status:500, "message":"file no found", error}))})
+    readFile.readFile(dato, imagenUrl, mensaje).then(dato=>res.json({"response":dato, status:200})).catch(error => res.json({ status:500, "message":"file no found", error}))})
     .catch(err => res.json({status:404,error:err, message:"no se pudo mover al servidor consulte el administrador"}))
 
 }

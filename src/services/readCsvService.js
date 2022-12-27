@@ -7,7 +7,7 @@ const { type } = require("os");
 const { send } = require("process");
 
 
-let arch = "../assets/csv/";
+let arch = "../assets/csv";
 let dataArray;
 let sendMessages = 0
 let sendFail =[]
@@ -17,6 +17,7 @@ let uploadCsv = (file)=>{
   
   let name = file.name
   let arcI = path.join(__dirname, `${arch}${name}`)
+  console.log("arcI", arcI)
   return new Promise((resolve, reject)=>{
 
    file.mv(arcI, (err)=>{
@@ -31,7 +32,7 @@ let uploadCsv = (file)=>{
 }
 
 
-let readFile = (arcI) => {
+let readFile = (arcI, imagenUrl, mensaje) => {
   return new Promise((resolve, reject) => {
 
     fs.readFile(arcI, "utf8", function (err, data) {
@@ -61,7 +62,7 @@ let readFile = (arcI) => {
          sendFail.push(index)
         
         }else{
-         createSms(name, number).then(sendMessages = sendMessages + 1).catch(sendFail.push(index))
+         createSms(name, number, imagenUrl, mensaje).then(sendMessages = sendMessages + 1).catch(sendFail.push(index))
          indexSend.push(`${name}:${number}`)
         }
         if (position === dataArray.length - 1) {

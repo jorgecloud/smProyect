@@ -3,7 +3,10 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
+const path = require("path");
 
+
+let imagen = path.join(__dirname, `../images/incomeTaxes.jpg`)
 
 let sendSms = (body, message) => {
   return new Promise((resolve, reject) => {
@@ -15,6 +18,7 @@ let sendSms = (body, message) => {
       .create({  
         body: message, 
         from: fromNumber,
+        mediaUrl: [],
         // messagingServiceSid: 'MGaa7ca78cbdbab6d4be0846cabe4cb073',      
          to: `+1${element}` 
        }) 

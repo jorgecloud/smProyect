@@ -20,11 +20,9 @@ let fileCsv = (req, res) => {
     return res.json({ message: "file no fount, only 4mb" });
   }
 
-  readFile
-    .uploadCsv(file)
+  readFile.uploadCsv(file)
     .then((dato) => {
-      readFile
-        .readFile(dato, imagenUrl, mensaje)
+       readFile.readFile(dato, imagenUrl, mensaje)
         .then((dato) => res.json({ response: dato, status: 200 }))
         .catch((error) =>
           res.json({ status: 500, message: "file no found", error })

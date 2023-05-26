@@ -5,7 +5,7 @@ const validator = [
     .isEmail()
     .withMessage("Provide valid email")
     .exists({ checkFalsy: true }),
-
+    
   body("password")
     .exists()
     .withMessage("Provide valid Password")
@@ -13,7 +13,14 @@ const validator = [
     .withMessage("Password should be string")
     .isLength({ min: 5 })
     .withMessage("Password should be at least 5 characters"),
-];
+
+  body("empresaName")
+    .exists()
+    .withMessage("Provide valid name empresa")
+    .isString()
+    .withMessage("Provide valid name empresa string")
+    .isLength({ min: 5 })
+]
 
 const validatorAppoiments =[
   body("day").trim()
@@ -45,6 +52,8 @@ const validatorAppoiments =[
 
 
 ]
+
+
 
 module.exports = {
   validator,

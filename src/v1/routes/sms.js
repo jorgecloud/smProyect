@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const createSms = require("../../controller/smsController");
+const appointment = require("../../controller/appoinmentsController");
 const readcsv = require('../../controller/readCsvController')
 const user = require ('../../controller/userController')
 const {validarToken} = require('../../middlewares/autenticationToke')
 const {validator, validatorAppoiments} =require('../../middlewares/validator')
 
-router.post("/sendsms", validarToken, validatorAppoiments, createSms.createSms);
+router.post("/appoiments", validarToken, validatorAppoiments, appointment.appointment);
 
-router.post("/smsfree", validarToken, createSms.smsFree)
+//router.post("/sms", validarToken, createSms.smsFree)
 
-router.post("/sm",createSms.responce)
+//router.post("/sm",createSms.responce)
 
-router.post("/creareview", validarToken, createSms.createReview);
+//router.post("/creareview", validarToken, createSms.createReview);
 
-router.post("/readcsv", validarToken, readcsv.fileCsv)
+router.post("/smsMasive", validarToken, readcsv.fileCsv)
 
 router.post("/crearuser", validarToken, validator, user.crearUser)
 

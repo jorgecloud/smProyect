@@ -29,7 +29,7 @@ let findUser = async (user) => {
 
   let token = tken.sign({userFind}, process.env.SECRE, {expiresIn: process.env.CADUCIDAD})
 
-    return {user:userFind.email, token: token};
+    return {user:userFind.email, token: token, empresaName: userFind.empresaName};
   } 
 };
 

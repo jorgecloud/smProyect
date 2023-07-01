@@ -2,7 +2,6 @@ const dbMongo = require("../db/db");
 
 
 
-
 let sendMessagesEs = (body, fechaAppointment, hours)=>{
 
     let messageModel =  dbMongo.messagesmodel(body)

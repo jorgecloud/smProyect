@@ -1,10 +1,8 @@
 const { validationResult } = require("express-validator");
-const { dayForm, hourForm } = require("../utils/date");
-const model = require("../model/sms.model");
+const appointmentService = require("../services/appointmentService");
 
 let appointment = async (req, res) => {
   let body = req.body;
-  console.log(body);
 
   const errors = validationResult(req);
 
@@ -23,21 +21,17 @@ let appointment = async (req, res) => {
     });
   }
 
-  let fechaAppointment = await dayForm(body.day);
-  console.log("fecha Appointment", fechaAppointment);
+  let appoimentService = await appointmentService.appoinmentSave(body);
 
-  let hours = await hourForm(body.hours);
-  console.log("hora formateada", hours);
-
-  if (body.type === "Es") {
-    console.log("espanol");
-    message = await model.sendMessagesEs(body, fechaAppointment, hours);
-  } else {
-    message = await model.sendMessagesIn(body, hours);
-    console.log("In");
-  }
-  res.json({"ok":"ok"})
+  res.json({ appoinment: appoimentService });
 };
+
+
+let getappoiments = async (req, res)=>{
+  let body = req.body;
+
+
+}
 
 module.exports = {
   appointment,

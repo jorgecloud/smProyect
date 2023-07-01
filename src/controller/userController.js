@@ -58,7 +58,7 @@ let login = async (req, res) => {
   if(userExist.error){
     return res.status(400).json({success:false, errors: userExist.error}) 
   }
-  res.status(200).json({ success: true, accesToken:userExist.token, user:userExist.user });
+  res.status(200).json({ success: true, accesToken:userExist.token, user:userExist.user, empresa: userExist.empresaName });
 //res.status(200).json({success:userExist})
 };
 

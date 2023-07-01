@@ -48,9 +48,12 @@ const validatorAppoiments =[
   body("type")
   .notEmpty()
   .isIn(['Es', 'In'])
-  .withMessage("provide valid type")
+  .withMessage("provide valid type"),
 
-
+  body("empresaName")
+  .notEmpty()
+  .withMessage("provide valid empresaName"),
+  
 ]
 
 

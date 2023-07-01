@@ -19,7 +19,6 @@ let monthEs = [
 let hourOffice = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6"];
 
 let dayForm = (date) => {
-  console.log("dateAppoiments", date);
   let currenDateYear = dayjs().year();
 
   let dayWek = daysEs[dayjs(date).day() - 1];
@@ -28,7 +27,6 @@ let dayForm = (date) => {
   let year = dayjs(date).year();
 
   let dateAppoiments = `${dayWek} ${dayNum}/${month}/${year}`;
-  console.log("dateAppoiments", dateAppoiments);
 
   if (dateAppoiments.includes("undefined") || dateAppoiments.includes("NaN")) {
     console.log("Date is undefined", dateAppoiments);

@@ -8,7 +8,9 @@ const {validator, validatorAppoiments} =require('../../middlewares/validator')
 
 router.post("/appoiments", validarToken, validatorAppoiments, appointment.appointment);
 
-router.get("/getappoiments", validarToken)
+router.get("/getappoiments", validarToken, appointment.getappoiments)
+
+router.get("/getappoimentsbydate", validarToken, appointment.getappoimentsByDate)
 
 //router.post("/sms", validarToken, createSms.smsFree)
 

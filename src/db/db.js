@@ -114,7 +114,6 @@ async function insertAppointmen(appoiment) {
     // Use the collection name  "Sm"
     const col = db.collection("appointments");
     // Construct a document
-    //let dato = JSON.parse(data);
     // Insert a single document, wait for promise so we can read it back
     const p = await col.insertOne(appoiment);
     // find doc inser
@@ -129,6 +128,51 @@ async function insertAppointmen(appoiment) {
   }
 }
 
+async function gettAppointmen(body, fechaAppointment) {
+  try {
+    // mongo connect
+    await client.connect();
+    console.log("Connected correctly to server");
+    // Use db name
+    const db = client.db(body.empresaName);
+    // Use the collection name  "Sm"
+    const col = db.collection("appointments");
+
+    const appoimentNew = await col.find({ day: fechaAppointment }).toArray();
+    console.log("doc ", appoimentNew);
+
+    return appoimentNew;
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+
+async function  gettAppointmenByDate(body, date){
+  try{
+    // mongo connect
+    await client.connect();
+    console.log("Connected correctly to server");
+    // Use db name
+    const db = client.db(body.empresaName);
+    // Use the collection name  "Sm"
+    const col = db.collection("appointments");
+
+    const appoimentNew = await col.find({ day: date }).toArray();
+    console.log("doc ", appoimentNew);
+
+    return appoimentNew;
+
+  }catch(err){
+    console.log(err)
+  } finally{
+    await client.close()
+  }
+
+}
+
 module.exports = {
   insertData,
   inserUser,
@@ -136,4 +180,6 @@ module.exports = {
   findBase,
   messagesmodel,
   insertAppointmen,
+  gettAppointmen,
+  gettAppointmenByDate
 };

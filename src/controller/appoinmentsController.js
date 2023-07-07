@@ -26,13 +26,24 @@ let appointment = async (req, res) => {
   res.json({ appoinment: appoimentService });
 };
 
-
-let getappoiments = async (req, res)=>{
+let getappoiments = async (req, res) => {
   let body = req.body;
 
+  let date = await appointmentService.appoinmentGet(body);
 
-}
+  res.json({ date });
+};
+
+let getappoimentsByDate = async (req, res) => {
+  let body = req.body;
+
+  let date = await appointmentService.getappoimentsByDate(body);
+
+  res.json({ date });
+};
 
 module.exports = {
   appointment,
+  getappoiments,
+  getappoimentsByDate,
 };

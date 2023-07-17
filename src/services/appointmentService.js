@@ -1,7 +1,7 @@
 const dbMongo = require("../db/db");
 const { dayForm, hourForm, dateNow } = require("../utils/date");
 const { AppointmentModel } = require("../model/appointment.model");
-const { body } = require("express-validator");
+
 
 let appoinmentSave = async (body) => {
   let fechaAppointment = await dayForm(body.day);
@@ -37,8 +37,19 @@ let getappoimentsByDate = async (body) => {
   return appoinmentFind;
 };
 
+let updateAppoiment = async (body)=>{
+
+ // console.log("body ", body)
+  let appoimentUpdate = await dbMongo.gettAppointmenById(body)
+
+
+  return appoimentUpdate
+
+}
+
 module.exports = {
   appoinmentSave,
   appoinmentGet,
-  getappoimentsByDate
+  getappoimentsByDate,
+  updateAppoiment
 };

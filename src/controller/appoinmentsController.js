@@ -42,8 +42,26 @@ let getappoimentsByDate = async (req, res) => {
   res.json({ date });
 };
 
+let updateAppoiment = async (req, res)=> {
+  let body = req.body
+
+  const errors = validationResult(req);
+
+  // if there is error then return Error
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      errors: errors.array(),
+    });
+  }
+   let appoiment = await appointmentService.updateAppoiment(body)
+    res.json({appoiment})
+
+}
+
 module.exports = {
   appointment,
   getappoiments,
   getappoimentsByDate,
+  updateAppoiment
 };

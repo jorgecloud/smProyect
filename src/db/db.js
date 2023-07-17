@@ -1,5 +1,5 @@
 const { json } = require("express");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const confi = require("../config");
 
 // Connection URI db
@@ -173,6 +173,34 @@ async function  gettAppointmenByDate(body, date){
 
 }
 
+async function  gettAppointmenById(body){
+  console.log("id", body._id)
+  try{
+    // mongo connect
+    await client.connect();
+    console.log("Connected correctly to server");
+    // Use db name
+    const db = client.db(body.empresaName);
+    // Use the collection name  "Sm"
+    const col = db.collection("appointments");
+
+    const appoimentNew = await col.findOne({_id: ObjectId(body._id)})
+    console.log("doc ", appoimentNew);
+
+    return appoimentNew;
+
+  }catch(err){
+    console.log(err)
+  } finally{
+    await client.close()
+  }
+
+}
+
+async function updateAppoiment(body){
+
+}
+
 module.exports = {
   insertData,
   inserUser,
@@ -181,5 +209,7 @@ module.exports = {
   messagesmodel,
   insertAppointmen,
   gettAppointmen,
-  gettAppointmenByDate
+  gettAppointmenByDate,
+  gettAppointmenById,
+  updateAppoiment
 };

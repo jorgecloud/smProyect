@@ -40,10 +40,21 @@ let getappoimentsByDate = async (body) => {
 let updateAppoiment = async (body)=>{
 
  // console.log("body ", body)
-  let appoimentUpdate = await dbMongo.gettAppointmenById(body)
+ let findAppoiment = await dbMongo.gettAppointmenById(body)
+  
+  console.log("se encontro", findAppoiment);
 
+  if (
+    findAppoiment == null ||
+    findAppoiment == undefined ||
+    findAppoiment.Error
+  ) {
+    return findAppoiment;
+  }
+let newAppoiment = await dbMongo.updateAppoiment(findAppoiment)
+console.log("update", newAppoiment)
 
-  return appoimentUpdate
+  return findAppoiment
 
 }
 

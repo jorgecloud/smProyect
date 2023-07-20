@@ -1,5 +1,5 @@
 const { json } = require("express");
-const { MongoClient, ObjectId } = require("mongodb");
+const { MongoClient, ObjectId, BSONType } = require("mongodb");
 const confi = require("../config");
 
 // Connection URI db
@@ -149,9 +149,8 @@ async function gettAppointmen(body, fechaAppointment) {
   }
 }
 
-
-async function  gettAppointmenByDate(body, date){
-  try{
+async function gettAppointmenByDate(body, date) {
+  try {
     // mongo connect
     await client.connect();
     console.log("Connected correctly to server");
@@ -164,18 +163,15 @@ async function  gettAppointmenByDate(body, date){
     console.log("doc ", appoimentNew);
 
     return appoimentNew;
-
-  }catch(err){
-    console.log(err)
-  } finally{
-    await client.close()
+  } catch (err) {
+    console.log(err);
+  } finally {
+    await client.close();
   }
-
 }
 
-async function  gettAppointmenById(body){
-  console.log("id", body._id)
-  try{
+async function gettAppointmenById(body) {
+  try {
     // mongo connect
     await client.connect();
     console.log("Connected correctly to server");
@@ -184,21 +180,39 @@ async function  gettAppointmenById(body){
     // Use the collection name  "Sm"
     const col = db.collection("appointments");
 
-    const appoimentNew = await col.findOne({_id: ObjectId(body._id)})
+    const appoimentNew = await col.findOne({ _id: ObjectId(body._id) });
     console.log("doc ", appoimentNew);
 
     return appoimentNew;
-
-  }catch(err){
-    console.log(err)
-  } finally{
-    await client.close()
+  } catch (err) {
+    return { Error: err };
+  } finally {
+    await client.close();
   }
-
 }
 
-async function updateAppoiment(body){
+async function updateAppoiment(findAppoiment) {
+  try {
+    console.log("finappoiment",findAppoiment)
+    await client.connect();
+    console.log("Connected correctly to server");
+    console.log("id",ObjectId(findAppoiment._id ))
+    // Use db name
+    const db = client.db(findAppoiment.empresaName);
+    // Use the collection name  "Sm"
+    const col = db.collection("appointments");
 
+    const appoimentNew = await col.updateOne(
+      { _id:findAppoiment._id },
+     { "hours": "00 AM"}
+    );
+    return appoimentNew;
+  } catch (err){
+    
+    console.log("este es el error",err);
+  } finally {
+    await client.close();
+  }
 }
 
 module.exports = {
@@ -211,5 +225,5 @@ module.exports = {
   gettAppointmen,
   gettAppointmenByDate,
   gettAppointmenById,
-  updateAppoiment
+  updateAppoiment,
 };

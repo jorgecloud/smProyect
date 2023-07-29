@@ -3,39 +3,42 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
+const { rejects } = require("assert");
 const path = require("path");
+const { Reject } = require("twilio/lib/twiml/VoiceResponse");
 
-
-let imagen = path.join(__dirname, `../images/incomeTaxes.jpg`)
+//
 
 let sendSms = (body, message) => {
-  return new Promise((resolve, reject) => {
-    let numbers = body.to;
-
-    numbers.forEach((element) => {
-      console.log(element)
-      client.messages 
-      .create({  
-        body: message, 
+  let numbers = body.to;
+  console.log("number", numbers);
+  return new Promise((resolve, Reject) => {
+    client.messages
+      .create({
+        body: message,
         from: fromNumber,
         mediaUrl: [],
-        // messagingServiceSid: 'MGaa7ca78cbdbab6d4be0846cabe4cb073',      
-         to: `+1${element}` 
-       }) 
-      .then(data => resolve(data))
-      .catch(err =>reject(err)) 
-      .done();
-    }); 
- });
-}
+        // messagingServiceSid: 'MGaa7ca78cbdbab6d4be0846cabe4cb073',
+        to: `${numbers}`,
+      })
+      .then((data) => {
+        console.log("data", data);
+        resolve(data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+        Reject(err);
+      });
+  });
+};
 
 let responceMessage = (message) => {
   const twiml = new MessagingResponse();
   twiml.message(message);
- return twiml.toString()
+  return twiml.toString();
 };
 
 module.exports = {
   sendSms,
-  responceMessage
+  responceMessage,
 };

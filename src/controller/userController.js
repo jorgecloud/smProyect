@@ -23,6 +23,7 @@ let crearUser = async (req, res) => {
   let user = {
     email: body.email,
     password: pass,
+    empresaName: body.empresaName
   };
 
   console.log("el usuario es ", user);
@@ -34,13 +35,14 @@ let crearUser = async (req, res) => {
     console.log("Error", userId);
     res.json({ Error: userId.error });
   } else {
-    console.log("todo bienusuario creado", userId);
+    console.log("todo bien usuario creado", userId);
     res.json({ userId: userId });
   }
 };
 
 let login = async (req, res) => {
   let user = req.body;
+  console.log("user", user)
   const errors = validationResult(req);
 
    // if there is error then return Error
@@ -56,7 +58,8 @@ let login = async (req, res) => {
   if(userExist.error){
     return res.status(400).json({success:false, errors: userExist.error}) 
   }
-  res.status(200).json({ success: true, accesToken:userExist.token, user:userExist.user });
+  res.status(200).json({ success: true, accesToken:userExist.token, user:userExist.user, empresa: userExist.empresaName });
+//res.status(200).json({success:userExist})
 };
 
 module.exports = {

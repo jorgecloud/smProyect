@@ -1,6 +1,6 @@
 const dayjs = require("dayjs");
 
-let daysEs = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
+let daysEs = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
 let monthEs = [
   "Enero",
   "Febrero",
@@ -19,16 +19,15 @@ let monthEs = [
 let hourOffice = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6"];
 
 let dayForm = (date) => {
-  console.log("dateAppoiments", date);
   let currenDateYear = dayjs().year();
 
-  let dayWek = daysEs[dayjs(date).day() - 1];
+  let dayWek = daysEs[dayjs(date).day()];
   let dayNum = dayjs(date).date();
   let month = monthEs[dayjs(date).month()];
   let year = dayjs(date).year();
 
   let dateAppoiments = `${dayWek} ${dayNum}/${month}/${year}`;
-  console.log("dateAppoiments", dateAppoiments);
+
 
   if (dateAppoiments.includes("undefined") || dateAppoiments.includes("NaN")) {
     console.log("Date is undefined", dateAppoiments);
@@ -48,7 +47,15 @@ let hourForm = (hour) => {
   return horaf;
 };
 
+let dateNow = () => {
+  let now = new Date();
+
+ let format =  dayForm(now)
+  return format;
+};
+
 module.exports = {
   dayForm,
   hourForm,
+  dateNow
 };

@@ -8,39 +8,45 @@ const client = require("twilio")(accountSid, authToken);
 
 // create sms
 let createSms = (name, number, imagenUrl, mensaje) => {
- 
-  if(imagenUrl.includes("http://")|| imagenUrl.includes("https://")){
-  
-    return new Promise(() => {
-      let textSm = model.loteriVisas();
+  if (imagenUrl.includes("http://") || imagenUrl.includes("https://")) {
+    return new Promise((resolve, reject) => {
+      //let textSm = model.loteriVisas();
       client.messages
         .create({
           body: mensaje,
-          mediaUrl:[imagenUrl],
           from: fromNumber,
+          mediaUrl: [imagenUrl],
           to: number,
+        })
+        .then((data) => {
+          resolve(data), console.log("data", data);
         })
         .catch((err) => {
           console.log("twlio", err);
+          reject(err);
           return false;
         });
     });
-  }else{
-    return new Promise(() => {
-      let textSm = model.loteriVisas();
+  } else {
+    return new Promise((resolve, reject) => {
+      //let textSm = model.loteriVisas();
       client.messages
         .create({
           body: mensaje,
           from: fromNumber,
           to: number,
         })
+        .then((data) => {
+          resolve(data);
+        })
         .catch((err) => {
           console.log("twlio", err);
+          reject(err)
+
           return false;
         });
     });
   }
-  
 };
 
 module.exports = {

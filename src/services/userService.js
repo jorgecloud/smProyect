@@ -15,19 +15,22 @@ let crearUserService = async (user) => {
 
 //find user db
 let findUser = async (user) => {
+  //let empresaName = await dbMongo.findBase(user.nameEmpresa)
+
+  //return {ok:"ok"}
   let userFind = await dbMongo.userFind(user);
   console.log("user", userFind);
   if (userFind === null || userFind === undefined) {
    return {status:400, error:"Datos incorrectos, try again"}
      
   } else if (!bcrypt.compareSync(user.password, userFind.password)){
-    return {status:400, error:"el password es incorrecto try again"}
+    return {status:400, error:"el password is incorrect try again"}
 }else{
 
   let token = tken.sign({userFind}, process.env.SECRE, {expiresIn: process.env.CADUCIDAD})
 
-    return {user:userFind.email, token: token};
-  }
+    return {user:userFind.email, token: token, empresaName: userFind.empresaName};
+  } 
 };
 
 module.exports = {

@@ -26,9 +26,10 @@ router.delete("/deleteappoiment", validarToken, validator.validatorAppoimentDele
 
 router.post("/sms", validarToken, validator.validatorsms, sms.createSms)
 
+router.post("/smsfree", validarToken, validator.validartorSmsFree, sms.createSmsFree)
+
 //router.post("/sm",createSms.responce)
 
-//router.post("/creareview", validarToken, createSms.createReview);
 
 router.post("/smsMasive", validarToken, readcsv.fileCsv)
 

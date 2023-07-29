@@ -71,10 +71,17 @@ const validatorsms = [
   body("empresaName").notEmpty().withMessage("provide valid empresaName"),
 ]
 
+const validartorSmsFree = [
+  body("message").exists().withMessage("Provide valid message"),
+  body("to").exists().isNumeric(["0-9"]).withMessage("provide valid number"),
+  body("empresaName").exists().withMessage("provide valid empresaName")
+]
+
 module.exports = {
   validator,
   validatorAppoiments,
   validatorAppoimentsUpdate,
   validatorAppoimentDelete,
-  validatorsms
+  validatorsms,
+  validartorSmsFree
 };

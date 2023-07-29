@@ -3,7 +3,6 @@ const { json } = require("express");
 const model = require("../model/sms.model");
 const { validationResult } = require("express-validator");
 const { dayForm, hourForm } = require("../utils/date");
-// twilio account
 
 // create sms
 let createSms = async (req, res) => {
@@ -22,12 +21,10 @@ let createSms = async (req, res) => {
   }
 
   if (typeof body != "object") {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        errors: "datos no validos verifique formato json",
-      });
+    return res.status(400).json({
+      success: false,
+      errors: "datos no validos verifique formato json",
+    });
   }
 
   if (body.type === "Es") {
@@ -46,38 +43,29 @@ let createSms = async (req, res) => {
     .catch((err) => {
       res.json({ err });
     });
-
-  // .then((data) => res.json(data))
-  //.catch((err) => res.status(400).json({success:false,errors:err}));
 };
 
-let smsFree = (req, res) => {
-  let message = req.body.messagefree;
-};
-
-// create review
-let createReview = (req, res) => {
+let createSmsFree = async (req, res) => {
   let body = req.body;
-  let numbers = body.to;
-  numbers.forEach((element) => {
-    let textSm = model.reviewClient(body);
-    client.messages
-      .create({
-        body: textSm,
-        from: fromNumber,
-        // mediaUrl: ['http://mariamila.com/images/nuevas/logo-web.png'],
-        to: element,
-      })
-      .then((mesas) => {
-        res.json({ status: 200, message: mesas });
-        let dato = JSON.stringify(mesas);
-        dbMongo.insertData(dato);
-        return;
-      })
-      .catch((err) => {
-        res.json({ error: err });
-      });
-  });
+  let message = body.message;
+  const errors = validationResult(req);
+
+  // if there is error then return Error
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      errors: errors.array(),
+    });
+  }
+
+  await sendSms(body, message)
+    .then((data) => {
+      console.log("smsSend", data);
+      res.json({ data });
+    })
+    .catch((err) => {
+      res.json({ err });
+    });
 };
 
 let responce = async (req, res) => {
@@ -96,8 +84,7 @@ let sendMail = async (mail, data) => {
 
 module.exports = {
   createSms,
-  smsFree,
   sendMail,
-  createReview,
   responce,
+  createSmsFree,
 };

@@ -22,28 +22,33 @@ let createSms = async (req, res) => {
   }
 
   if (typeof body != "object") {
-    return res.status(400).json({success:false,
-       errors: "datos no validos verifique formato json" });
+    return res
+      .status(400)
+      .json({
+        success: false,
+        errors: "datos no validos verifique formato json",
+      });
   }
-
-  let fechaAppointment = await dayForm(body.day);
-
-  console.log("fecha Appointment", fechaAppointment);
-
-  let hours = await hourForm(body.hours);
-  console.log("hora formateada", hours);
 
   if (body.type === "Es") {
     console.log("espanol");
-    message = await model.sendMessagesEs(body, fechaAppointment, hours);
+    message = await model.sendMessagesEs(body);
   } else {
     message = await model.sendMessagesIn(body, hours);
     console.log("In");
   }
 
-  sendSms(body, message)
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json({success:false,errors:err}));
+  let smsSend = await sendSms(body, message)
+    .then((data) => {
+      console.log("smsSend", data);
+      res.json({ data });
+    })
+    .catch((err) => {
+      res.json({ err });
+    });
+
+  // .then((data) => res.json(data))
+  //.catch((err) => res.status(400).json({success:false,errors:err}));
 };
 
 let smsFree = (req, res) => {

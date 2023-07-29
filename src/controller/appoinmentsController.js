@@ -42,6 +42,12 @@ let getappoimentsByDate = async (req, res) => {
   res.json({ date });
 };
 
+let getappoimentsById = async (req, res)=>{
+  let body = req.body
+  let appoiment = await appointmentService.getappoimentsById(body)
+  return res.json(appoiment)
+}
+
 let updateAppoiment = async (req, res)=> {
   let body = req.body
 
@@ -59,9 +65,20 @@ let updateAppoiment = async (req, res)=> {
 
 }
 
+let deleteAppoiment = async (req, res)=>{
+  let body = req.body
+
+  let appoimentDelete = await appointmentService.deleteAppoiment(body)
+  res.json({appoimentDelete})
+
+
+} 
+
 module.exports = {
   appointment,
   getappoiments,
   getappoimentsByDate,
-  updateAppoiment
+  updateAppoiment,
+  getappoimentsById,
+  deleteAppoiment
 };

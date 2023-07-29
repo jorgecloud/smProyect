@@ -1,4 +1,6 @@
-function AppointmentModel(name, day, hours, to, type, empresaName) {
+function AppointmentModel(id, title, name, day, hours, to, type, empresaName) {
+  this.id = id
+  this.title = title;
   this.name = name;
   this.day = day;
   this.hours = hours;

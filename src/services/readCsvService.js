@@ -57,20 +57,25 @@ let readFile = (arcI, imagenUrl, mensaje) => {
         let number = numberFormat(index);
         console.log("name quedo asi", name);
         console.log("number quedo asi", number);
+        console.log("datos ",index, position)
         if(number == false || name == false){
          console.log("datos invalidos",index, position)
          sendFail.push(index)
         
         }else{
-         createSms(name, number, imagenUrl, mensaje).then(sendMessages = sendMessages + 1).catch(sendFail.push(index))
+         createSms(name, number, imagenUrl, mensaje).then((data)=>{console.log("por aca todo bien"),sendMessages = sendMessages + 1}).catch((err)=>{console.log("por aca no se envio nada "),sendFail.push(index)})
          indexSend.push(`${name}:${number}`)
         }
+        console.log("dataArray.length contador",dataArray.length -1)
         if (position === dataArray.length - 1) {
-          resolve({"send messages total":sendMessages, "sen messages":indexSend, "sendFail":sendFail});
+          resolve((data)=>{
+           return {"send messages total":sendMessages, "sen messages":indexSend, "sendFail":sendFail}
+          });
           fs.unlinkSync(arcI)
           sendMessages = 0
           indexSend=[]
           sendFail =[]
+          return
         }
       });
     });

@@ -191,25 +191,52 @@ async function gettAppointmenById(body) {
   }
 }
 
-async function updateAppoiment(findAppoiment) {
+async function updateAppoiment(body, id) {
   try {
-    console.log("finappoiment",findAppoiment)
+    console.log("body db", body, id);
     await client.connect();
     console.log("Connected correctly to server");
-    console.log("id",ObjectId(findAppoiment._id ))
-    // Use db name
-    const db = client.db(findAppoiment.empresaName);
+
+    const db = client.db(body.empresaName);
     // Use the collection name  "Sm"
     const col = db.collection("appointments");
 
-    const appoimentNew = await col.updateOne(
-      { _id:findAppoiment._id },
-     { "hours": "00 AM"}
+    const appoimentNew = await col.findOneAndUpdate(
+      { id: id },
+      {
+        $set: {
+          name: body.name,
+          day: body.day,
+          hours: body.hours,
+          to: body.to,
+          type: body.type,
+          empresaName: body.empresaName,
+        },
+      }
     );
     return appoimentNew;
-  } catch (err){
-    
-    console.log("este es el error",err);
+  } catch (err) {
+    console.log("este es el error", err);
+  } finally {
+    await client.close();
+  }
+}
+
+async function deleteAppoiment(body) {
+  try {
+    await client.connect();
+
+    console.log("Connected correctly to server");
+
+    const db = client.db(body.empresaName);
+
+    const col = db.collection("appointments");
+
+    const appoimentDelete = await col.findOneAndDelete({ id: body.id });
+
+    return appoimentDelete;
+  } catch (err) {
+    console.log("err", err);
   } finally {
     await client.close();
   }
@@ -226,4 +253,5 @@ module.exports = {
   gettAppointmenByDate,
   gettAppointmenById,
   updateAppoiment,
+  deleteAppoiment,
 };

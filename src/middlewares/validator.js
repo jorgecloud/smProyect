@@ -41,6 +41,8 @@ const validatorAppoiments = [
 ];
 
 const validatorAppoimentsUpdate = [
+  body("id").exists().withMessage("provide valid id"),
+
   body("day").exists().withMessage("Provide valid date"),
 
   body("name").exists().isString().withMessage("Provide valid name"),
@@ -53,9 +55,26 @@ const validatorAppoimentsUpdate = [
 
   body("empresaName").notEmpty().withMessage("provide valid empresaName"),
 ];
+const validatorAppoimentDelete = [
+  body("id").exists().withMessage("provide valid id"),
+  body("empresaName").exists().withMessage("provide valid empresa name"),
+];
+
+
+const validatorsms = [
+  body("id").exists().withMessage("provide valid id"),
+  body( "name").exists().withMessage("provide valid name"),
+  body("day").exists().withMessage("provide valid day"),
+  body("hours").exists().withMessage("provide valid hours"),
+  body("to").exists().isNumeric(["0-9"]).withMessage("provide valid number"),
+  body("type").notEmpty().isIn(["Es", "In"]).withMessage("provide valid type"),
+  body("empresaName").notEmpty().withMessage("provide valid empresaName"),
+]
 
 module.exports = {
   validator,
   validatorAppoiments,
   validatorAppoimentsUpdate,
+  validatorAppoimentDelete,
+  validatorsms
 };

@@ -3,6 +3,7 @@ const appointmentService = require("../services/appointmentService");
 
 let appointment = async (req, res) => {
   let body = req.body;
+  console.log("body", body)
 
   const errors = validationResult(req);
 
